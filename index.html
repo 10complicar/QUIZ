@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz 10complicar Seguros</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #003366, #0055aa);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      padding: 10px;
+    }
+
+    header img {
+      height: 80px;
+      margin-right: 10px;
+    }
+
+    header h1 {
+      color: #003366;
+      font-size: 24px;
+    }
+
+    .quiz-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background: #0055aa;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .options button:hover {
+      background: #0077cc;
+    }
+
+    .timer {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #ffcc00;
+    }
+
+    .result {
+      font-size: 22px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header com logo -->
+  <header>
+    <img src="IMG_7124.PNG" alt="Logo 10complicar Seguros" />
+    <h1>10COMPLICAR SEGUROS</h1>
+  </header>
+
+  <!-- Container do quiz -->
+  <div class="quiz-container">
+    <div class="question" id="question">O que é um seguro?</div>
+    <div class="options">
+      <button onclick="checkAnswer(0)">A) É uma taxa obrigatória para qualquer cidadão</button>
+      <button onclick="checkAnswer(1)">B) É um contrato que garante proteção financeira contra riscos</button>
+      <button onclick="checkAnswer(2)">C) É um imposto aplicado pelo Governo</button>
+      <button onclick="checkAnswer(3)">D) É um serviço bancário de poupança</button>
+    </div>
+    <div class="timer" id="timer">Tempo: 20s</div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+  {
+    question: "O que é um seguro?",
+    options: [
+      "É uma taxa obrigatória para qualquer cidadão",
+      "É um contrato que garante proteção financeira contra riscos",
+      "É um imposto aplicado pelo Governo",
+      "É um serviço bancário de poupança"
+    ],
+    correct: 1
+  },
+  {
+    question: "Qual destes seguros é obrigatório em Angola?",
+    options: [
+      "Seguro de vida para todos os cidadãos",
+      "Seguro automóvel de responsabilidade civil",
+      "Seguro de viagem internacional",
+      "Seguro de saúde privada"
+    ],
+    correct: 1
+  },
+  {
+    question: "Quem é a entidade reguladora dos seguros em Angola?",
+    options: [
+      "Banco Nacional de Angola (BNA)",
+      "Administração Geral Tributária (AGT)",
+      "Agência Angolana de Regulação e Supervisão de Seguros (ARSEG)",
+      "Ministério das Finanças"
+    ],
+    correct: 2
+  },
+  {
+    question: "O que é o prêmio do seguro?",
+    options: [
+      "O valor pago pela seguradora ao segurado",
+      "O valor pago pelo segurado à seguradora",
+      "Um desconto oferecido ao cliente",
+      "O capital total garantido pelo seguro"
+    ],
+    correct: 1
+  },
+  {
+    question: "Qual é a principal função de uma apólice de seguro?",
+    options: [
+      "Emitir faturas fiscais",
+      "Comprovar a existência de um contrato de seguro",
+      "Servir como documento de identidade",
+      "Registrar reclamações do cliente"
+    ],
+    correct: 1
+  },
+  {
+    question: "Qual destes é um exemplo de seguro Não Vida?",
+    options: [
+      "Seguro de vida",
+      "Seguro automóvel",
+      "Seguro de reforma",
+      "Seguro de saúde vitalício"
+    ],
+    correct: 1
+  },
+  {
+    question: "O que significa 'sinistro' no contexto dos seguros?",
+    options: [
+      "O pagamento da primeira parcela",
+      "O valor da apólice",
+      "A ocorrência de um evento coberto pelo seguro",
+      "Um contrato com cláusulas especiais"
+    ],
+    correct: 2
+  },
+  {
+    question: "Quando um seguro é considerado obrigatório?",
+    options: [
+      "Quando o segurado deseja proteção extra",
+      "Quando a legislação exige a sua contratação",
+      "Quando é oferecido gratuitamente",
+      "Quando é sugerido por um consultor"
+    ],
+    correct: 1
+  },
+  {
+    question: "O que é a franquia em um contrato de seguro?",
+    options: [
+      "O valor que a seguradora reembolsa integralmente",
+      "O valor que o segurado assume em caso de sinistro",
+      "Um bônus oferecido após 5 anos",
+      "O valor total da apólice"
+    ],
+    correct: 1
+  },
+  {
+    question: "Qual destas é uma vantagem de ter um seguro?",
+    options: [
+      "Pagamento de mais impostos",
+      "Gasto financeiro sem retorno",
+      "Proteção financeira contra imprevistos",
+      "Endividamento garantido"
+    ],
+    correct: 2
+  },
+  {
+    question: "O que caracteriza o seguro multirriscos?",
+    options: [
+      "Cobre apenas um risco específico",
+      "Combina várias coberturas em uma só apólice",
+      "É exclusivo para empresas",
+      "É obrigatório para cidadãos"
+    ],
+    correct: 1
+  },
+  {
+    question: "Quem é o tomador do seguro?",
+    options: [
+      "A pessoa ou entidade que contrata o seguro",
+      "A pessoa que recebe a indenização",
+      "O agente de seguros",
+      "O beneficiário do seguro"
+    ],
+    correct: 0
+  },
+  {
+    question: "O que é um beneficiário no seguro de vida?",
+    options: [
+      "A seguradora que vendeu a apólice",
+      "O corretor responsável",
+      "A pessoa indicada para receber a indenização",
+      "O governo"
+    ],
+    correct: 2
+  },
+  {
+    question: "O que é um resseguro?",
+    options: [
+      "Um seguro que cobre outro seguro",
+      "Uma renovação de apólice",
+      "Um seguro exclusivo para bancos",
+      "Uma taxa adicional ao prêmio"
+    ],
+    correct: 0
+  },
+  {
+    question: "Qual é o objetivo da cobertura no contrato de seguro?",
+    options: [
+      "Limitar a responsabilidade do segurado",
+      "Determinar o prazo de vigência",
+      "Especificar os riscos protegidos pelo seguro",
+      "Cobrar mais impostos"
+    ],
+    correct: 2
+  }
+
+      // Adicionar aqui mais perguntas até 15
+    ];
+
+    let currentQuestion = 0;
+    let timeLeft = 30;
+    let timerId;
+
+    function loadQuestion() {
+      if (currentQuestion >= questions.length) {
+        document.getElementById("question").textContent = "Quiz concluído! Parabéns!";
+        document.querySelector(".options").style.display = "none";
+        document.getElementById("timer").style.display = "none";
+        return;
+      }
+
+      const q = questions[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      const btns = document.querySelectorAll(".options button");
+      btns.forEach((btn, index) => {
+        btn.textContent = `${String.fromCharCode(65 + index)}) ${q.options[index]}`;
+      });
+      document.getElementById("result").textContent = "";
+      timeLeft = 30;
+      document.getElementById("timer").textContent = `Tempo: ${timeLeft}s`;
+      clearInterval(timerId);
+      timerId = setInterval(countdown, 1000);
+    }
+
+    function countdown() {
+      timeLeft--;
+      document.getElementById("timer").textContent = `Tempo: ${timeLeft}s`;
+      if (timeLeft === 0) {
+        clearInterval(timerId);
+        document.getElementById("result").textContent = "Tempo esgotado!";
+        setTimeout(nextQuestion, 2000);
+      }
+    }
+
+    function checkAnswer(selected) {
+      clearInterval(timerId);
+      if (selected === questions[currentQuestion].correct) {
+        document.getElementById("result").textContent = "Resposta certa!";
+      } else {
+        document.getElementById("result").textContent = "Resposta errada!";
+      }
+      setTimeout(nextQuestion, 2000);
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      loadQuestion();
+    }
+
+    // Iniciar quiz
+    loadQuestion();
+  </script>
+
+</body>
+</html>
